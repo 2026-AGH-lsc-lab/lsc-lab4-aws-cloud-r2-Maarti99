@@ -70,6 +70,7 @@ To build the mathematical model, we assumed Lambda operates with 512 MB of memor
 
 ![Cost vs RPS Comparison](figures/cost-vs-rps.png)
 
+Since the load test data was affected by the aforementioned IAM restrictions, this cost model assumes a theoretical execution time of 100ms per request, based on successful single-invocation results from Assignment 1.
 ---
 
 ## Assignment 6: Final Recommendation
