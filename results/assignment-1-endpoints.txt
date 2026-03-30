@@ -1,0 +1,14 @@
+=== ZADANIE 1: WERYFIKACJA ENDPOINTOW ===
+
+
+3. Test Lambda (Zip):
+{"statusCode": 200, "headers": {"Content-Type": "application/json", "X-Server-Time-Ms": "75.090", "X-Instance-Id": "2026/03/30/[$LATEST]15deb5e854bf415084ba29660bb334df", "X-Cold-Start": "true"}, "body": "{\"results\": [{\"index\": 35859, \"distance\": 12.001459121704102}, {\"index\": 24682, \"distance\": 12.059946060180664}, {\"index\": 35397, \"distance\": 12.487079620361328}, {\"index\": 20160, \"distance\": 12.489519119262695}, {\"index\": 30454, \"distance\": 12.499402046203613}], \"query_time_ms\": 75.09, \"instance_id\": \"2026/03/30/[$LATEST]15deb5e854bf415084ba29660bb334df\", \"cold_start\": true}"}
+
+4. Test Lambda (Container):
+{"statusCode": 200, "headers": {"Content-Type": "application/json", "X-Server-Time-Ms": "71.724", "X-Instance-Id": "2026/03/30/[$LATEST]ae090eb279a6488eb9125a42c8cc3b8b", "X-Cold-Start": "true"}, "body": "{\"results\": [{\"index\": 35859, \"distance\": 12.001459121704102}, {\"index\": 24682, \"distance\": 12.059946060180664}, {\"index\": 35397, \"distance\": 12.487079620361328}, {\"index\": 20160, \"distance\": 12.489519119262695}, {\"index\": 30454, \"distance\": 12.499402046203613}], \"query_time_ms\": 71.724, \"instance_id\": \"2026/03/30/[$LATEST]ae090eb279a6488eb9125a42c8cc3b8b\", \"cold_start\": true}"}
+1. Test Fargate:
+{"instance_id":"ip-172-31-39-255.ec2.internal","query_time_ms":24.647,"results":[{"distance":12.001459121704102,"index":35859},{"distance":12.059946060180664,"index":24682},{"distance":12.487079620361328,"index":35397},{"distance":12.489519119262695,"index":20160},{"distance":12.499402046203613,"index":30454}]}
+
+
+2. Test EC2:
+{"instance_id":"4b80b5c99241","query_time_ms":24.626,"results":[{"distance":12.001459121704102,"index":35859},{"distance":12.059946060180664,"index":24682},{"distance":12.487079620361328,"index":35397},{"distance":12.489519119262695,"index":20160},{"distance":12.499402046203613,"index":30454}]}
