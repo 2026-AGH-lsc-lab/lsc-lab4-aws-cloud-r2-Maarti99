@@ -52,10 +52,28 @@ Based on the burst data, the AWS Lambda environment (failed czy passed?) the Ser
 ---
 
 ## Assignment 5: Pricing Strategy & Cost Model
+**AWS Pricing Data (US East - N. Virginia) based on collected screenshots:**
+* **Amazon EC2 (t3.micro):** $0.0104 per hour.
+* **Amazon ECS (Fargate):** $0.04048 per vCPU/hour and $0.004445 per GB/hour.
+* **AWS Lambda (x86):** $0.0000166667 per GB-second and $0.20 per 1 Million requests.
 
+**1. Idle Cost Analysis (18 hours/day idle)**
+Assuming a standard 30-day billing month, 18 idle hours per day equates to 540 idle hours per month.
+* **EC2 (t3.micro):** 540 hours * $0.0104/hr = **$5.62 / month**.
+* **Fargate (assuming 0.25 vCPU, 0.5 GB RAM):** ($0.01012 + $0.00222) * 540 hours = **$6.66 / month**.
+* **Lambda:** **$0.00 / month**.
+
+*Conclusion:* The AWS Lambda environment has exactly zero idle cost. This is because Lambda is a pure serverless compute service that automatically "scales to zero" when there are no incoming requests. You only pay for the exact compute time consumed down to the millisecond. EC2 and Fargate provision dedicated resources that run continuously, incurring fixed costs regardless of incoming traffic.
+
+**2. Monthly Cost vs. Requests per Second (RPS)**
+To build the mathematical model, we assumed Lambda operates with 512 MB of memory and an average execution time of 100 ms per request. EC2 and Fargate represent fixed flat-rate costs regardless of traffic (until they hit their concurrency limits and require scaling).
+
+![Cost vs RPS Comparison](figures/cost-vs-rps.png)
 
 ---
 
 ## Assignment 6: Final Recommendation
+Based on the latency decomposition, throughput testing, and cost modeling, the final recommendation heavily depends on the expected traffic pattern:
 
-**[Tutaj napiszemy końcowy wniosek po podliczeniu kosztów]**
+1.  **Low, Variable, or Spiky Traffic:** **AWS Lambda (Zip)** is the absolute winner. It scales to zero, costing nothing when idle, and handles standard traffic cheaply. The Zip deployment is strongly preferred over Container Images due to significantly faster Cold Start times (~600ms vs ~2500ms). However, Lambda struggles with sudden massive bursts (Scenario C) due to the SLO violation (p99 > 500ms) caused by concurrent cold starts.
+2.  **High, Continuous Traffic:** If the workload maintains a steady, predictable throughput above ~3.4 RPS (as seen on the intersection point in the graph), **Amazon EC2 (t3.micro)** or **Fargate** become vastly more cost-effective. EC2 provides excellent response times (p50 ~200ms at concurrency 10) for a very low flat monthly fee, avoiding the per-request billing trap of serverless functions at high scale.
