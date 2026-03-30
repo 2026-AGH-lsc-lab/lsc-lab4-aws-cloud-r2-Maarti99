@@ -47,7 +47,7 @@ During the "Burst from Zero" scenario (Scenario C), 200 concurrent requests were
 The results clearly exhibit a bimodal distribution of latency. A subset of the requests experienced massive delays due to forced Cold Starts (as the cloud provider had to spin up numerous concurrent instances/containers from scratch to handle the sudden spike). The subsequent requests in the same burst were routed to these newly warmed instances, resulting in much faster response times.
 
 **SLO Evaluation (p99 < 500ms):**
-Based on the burst data, the AWS Lambda environment (failed czy passed?) the Service Level Objective (SLO) requiring the 99th percentile (p99) latency to be under 500 ms. The immense latency penalty of provisioning multiple concurrent containers simultaneously pushed the tail latency far beyond the acceptable threshold.
+Based on the burst data, the AWS Lambda environment failed the Service Level Objective (SLO) requiring the 99th percentile (p99) latency to be under 500 ms. The immense latency penalty of provisioning multiple concurrent containers simultaneously pushed the tail latency far beyond the acceptable threshold.
 
 ---
 
